@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axiosInstance from '@/lib/axiosInstance';
 import { load } from 'cheerio';
 import pagination from '@/lib/pagination';
 import scrapeOngoingAnime from '@/lib/scapeOngoingAnime';
 
 const { BASEURL } = process.env;
 const ongoingAnime = async (page: number | string = 1) => {
-  const { data } = await  axios.get(`${BASEURL}/ongoing-anime/page/${page}`);
+  const { data } = await axiosInstance.get(`${BASEURL}/ongoing-anime/page/${page}`);
   const  $ = load(data);
   const ongoingAnimeEls = $('.venutama .rseries .rapi .venz ul li').toString();
   const ongoingAnimeData = scrapeOngoingAnime(ongoingAnimeEls);

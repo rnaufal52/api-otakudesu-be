@@ -1,15 +1,15 @@
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 import { load } from "cheerio";
 
 const { BASEURL } = process.env;
 const movie = async (slug: string): Promise<any> => {
-  const { data } = await axios.get(`${BASEURL}episode/${slug}`);
+  const { data } = await axiosInstance.get(`${BASEURL}episode/${slug}`);
   const $ = load(data);
 
   const checkUrl = $(".episodelist ul li span a").attr("href");
   const fixedUrl = checkUrl?.split("/")[4];
 
-  const { data: movieData } = await axios.get(`${BASEURL}episode/${fixedUrl}`);
+  const { data: movieData } = await axiosInstance.get(`${BASEURL}episode/${fixedUrl}`);
   const $$ = load(movieData);
 
   const title = $(".posttl").html() ?? $$(".posttl").html()

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from '@/lib/axiosInstance';
 import episodes from './episodes';
 import scrapeEpisode from '@/lib/scrapeEpisode';
 
@@ -20,7 +20,7 @@ const episode = async ({ episodeSlug, animeSlug, episodeNumber }: {
     slug = `${prefixEpisodeSlug}-episode-${episodeNumber - (parseInt(firstEpisodeNumber) == 0 ? 1 : 0)}-sub-indo`;
   }
 
-  const { data } = await axios.get(`${BASEURL}/episode/${slug}`);
+  const { data } = await axiosInstance.get(`${BASEURL}/episode/${slug}`);
   const result = scrapeEpisode(data);
 
   return result;
